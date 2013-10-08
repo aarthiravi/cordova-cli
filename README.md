@@ -1,23 +1,3 @@
-<!--
-#
-# Licensed to the Apache Software Foundation (ASF) under one
-# or more contributor license agreements.  See the NOTICE file
-# distributed with this work for additional information
-# regarding copyright ownership.  The ASF licenses this file
-# to you under the Apache License, Version 2.0 (the
-# "License"); you may not use this file except in compliance
-# with the License.  You may obtain a copy of the License at
-# 
-# http://www.apache.org/licenses/LICENSE-2.0
-# 
-# Unless required by applicable law or agreed to in writing,
-# software distributed under the License is distributed on an
-# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-#  KIND, either express or implied.  See the License for the
-# specific language governing permissions and limitations
-# under the License.
-#
--->
 # cordova-cli
 
 > The command line tool to build, deploy and manage [Cordova](http://cordova.io)-based applications.
@@ -28,6 +8,7 @@ Check out the [Getting Started guides](http://cordova.apache.org/docs/en/edge/gu
 
 # Supported Platforms
 
+- Amazon Fire OS
 - Android
 - BlackBerry 10
 - iOS
@@ -42,7 +23,7 @@ Check out the [Getting Started guides](http://cordova.apache.org/docs/en/edge/gu
   - [Android SDK](http://developer.android.com) - **NOTE** This tool
     will not work unless you have the absolute latest updates for all
     Android SDK components. Also you will need the SDK's `tools` and `platform-tools` directories on your __system path__ otherwise Android support will fail.
-  - [Windows Phone SDK](http://dev.windowsphone.com/en-us/downloadsdk) - **NOTE** This tool will not work unless you have `msbuild` on your __system path__ otherwise Windows Phone support will fail (`msbuild.exe` is generally located in `C:\Windows\Microsoft.NET\Framework\v4.0.30319`).
+  -Amazon Fire OS: [Amazon WebView SDK](--url--) and [Android SDK](http://developer.android.com)
 
 cordova-cli has been tested on Mas OS X, Linux, Windows 7 and Windows 8.
 
@@ -86,13 +67,15 @@ A Cordova application built with cordova-cli will have the following directory s
     |-- merges/
     | | |-- android/
     | | |-- blackberry10/
-    | | `-- ios/
+    | | |-- ios/
+    | | `-- amazon-fireos/
     |-- www/
     | `-- config.xml
     |-- platforms/
     | |-- android/
     | |-- blackberry10/
-    | `-- ios/
+    | |-- ios/
+    | `-- amazon-fireos/
     `-- plugins/
 
 ## .cordova/
@@ -108,6 +91,8 @@ Platform-specific web assets (HTML, CSS and JavaScript files) are contained with
     | `-- app.js
     |-- android/
     | `-- android.js
+    |-- amazon-fireos/
+    | `-- amazon-fireos.js
     www/
     `-- app.js
 
@@ -126,7 +111,6 @@ This file is what you should be editing to modify your application's metadata. A
 - The version can be modified via the `version` attribute from the top-level `<widget>` element.
 - The whitelist can be modified using the `<access>` elements. Make sure the `origin` attribute of your `<access>` element points to a valid URL (you can use `*` as wildcard). For more information on the whitelisting syntax, see the [docs.phonegap.com](http://docs.phonegap.com/en/2.2.0/guide_whitelist_index.md.html#Domain%20Whitelist%20Guide). You can use either attribute `uri` ([BlackBerry-proprietary](https://developer.blackberry.com/html5/documentation/access_element_834677_11.html)) or `origin` ([standards-compliant](http://www.w3.org/TR/widgets-access/#attributes)) to denote the domain.
 - Platform-specific preferences can be customized via `<preference>` tags. See [docs.phonegap.com](http://docs.phonegap.com/en/2.3.0/guide_project-settings_index.md.html#Project%20Settings) for a list of preferences you can use.
-- The entry/start page for your application can be defined via the `<content src>` element + attribute.
 
 ## platforms/
 Platforms added to your application will have the native application project structures laid out within this directory.
@@ -171,14 +155,17 @@ The directory structure of KewlApp now looks like this:
     |-- .cordova/
     |-- merges/
     | |-- android/
-    | `-- ios/
+    | |-- ios/
+    | `-- amazon-fireos/
     |-- www/
     | `-- index.html
     |-- platforms/
     | |-- android/
-    | | `-- …
-    | `-- ios/
-    |   `-- …
+    | | `-- 
+    | |-- ios/
+    | |  `-- 
+    | |-- amazon-fireos/
+    |   `-- 
     `-- plugins/
       `-- Kewlio/
 
@@ -204,16 +191,7 @@ Thanks to everyone for contributing! For a list of people involved, please see t
 
 # Known Issues and Troubleshooting
 
-## Any OS
-
-### Proxy Settings
-
-cordova-cli will use `npm`'s proxy settings. If you downloaded cordova-cli via `npm` and are behind a proxy, chances are cordova-cli should work for you as it will use those settings in the first place. Make sure that the `https-proxy` and `proxy` npm config variables are set properly. See [npm's configuration documentation](https://npmjs.org/doc/config.html) for more information.
-
-## Windows
-
-### Trouble Adding Android as a Platform
-
+##Windows
 When trying to add a platform on a Windows machine if you run into the following error message:
     cordova library for "android" already exists. No need to download. Continuing.
     Checking if platform "android" passes minimum requirements...
